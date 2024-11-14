@@ -1,0 +1,648 @@
+
+\section{Statistica Inferenziale}
+
+\begin{esercizio}[Problema 3, scritto del 12/02/2024]
+  Si consideri il modello statistico a \(n\) prove indipendenti avente
+  modello base \(\mathbb{X}_1 := \mathbb{R}_{> 0}\),
+  \(\mathcal{X}_1 := \mathcal{B} \mathbb{R}_{> 0}\),
+  \(\Theta := \mathbb{R}_{>0}\) con funzione di verosomiglianza
+  \begin{align*}
+    & L_1 : \Theta \times \mathbb{X}_1 \to [0, +\infty] \\
+    & L_1(\theta, x) := \frac{3 \theta^3}{x^4} \ind{[\theta, +\infty)}{x}
+  \end{align*}
+  dominato dalla misura unidimensionale di Lebesgue
+  \(\lambda : \mathcal{X}_1 \to [0, +\infty]\). Quindi il modello statistico base ha misure
+  di probabilità
+  \begin{align*}
+    & \pi_\theta^{(1)} : \mathcal{X}_1 \to [0, 1] \\
+    & \pi_\theta^{(1)}(E) := \int_E L_1(\theta,\cdot) \mathrm d \lambda .
+  \end{align*}
+  \begin{enumerate}[leftmargin=*]
+
+  \item Determinare il modello statistico a \(n\) prove indipendenti
+    \[
+      \mathbb{X}_n := \mathbb{X}_1^n\,,\ \mathcal{X}_n := \mathcal{X}_1^n\,,\ \Theta \,,\
+      \pi_\theta^{(n)} := \underbrace{\pi_\theta^{(1)} \otimes \cdots \otimes \pi_\theta^{(1)}}_{n \text{
+          volte}} .
+    \]
+    e scriverne la funzione di verosomiglianza
+    \(L_n : \Theta \times \mathbb{X}_n \to [\theta, +\infty]\).
+
+  \item Scrivere lo stimatore di massima verosomiglianza
+    \(\hat\theta_n : \mathbb{X}_n \to \Theta\) e calcolarne la sua legge.
+
+  \item Dimostrare che \(\hat\theta_n\) è uno stimatore distorto ma
+    asintoticamente non distorto. Poi calcolare uno stimatore
+    \(\tilde\theta_n : \mathbb{X}_n \to \Theta\) non distorto e proporzionale a
+    \(\hat\theta_n\).
+
+  \item Dimostrare, usando i teoremi visti a lezione, che
+    \(\tilde\theta_n\) è fortemente consistente.
+
+  \item Fissato \(n \in \mathbb{N}\) e \(\alpha \in [0, 1]\), calcolare un intervallo di
+    confidenza \(C_{n, \alpha}(x_1, \dots{}, x_n)\) per il parametro
+    \(\theta\) di livello \(1-\alpha\).
+  \end{enumerate}
+\end{esercizio}
+
+\begin{soluzione}
+  \begin{enumerate}
+  \item La funzione di verosomiglianza si scrive subito
+    \begin{align*}
+      L_n (\theta; x_1, \dots{}, x_n) & = \theta^{3n} \prod_{i = 1}^n \frac{\ind{[\theta, +\infty)}{x_i}}{x_i^4} = \\
+                                 & = \frac{\theta^{3n}}{\left(\prod_{i = 1}^n x_i\right)^4} \ind{[\theta, +\infty)}{\min(x_1, \dots{}, x_n)} .
+    \end{align*}
+    
+  \item Fissato \((x_1, \dots{}, x_n) \in \mathbb{X}_n\), studiamo la
+    funzione
+    \[
+      L_n(\cdot, x_1, \dots{}, x_n) : \Theta \to [0, +\infty] .
+    \]
+    e cerchiamo un \(\hat \theta \in \Theta\) che realizza il valore
+    \(\sup_{\theta \in \Theta} L(\theta; x_1, \dots{}, x_n)\). Osserviamo subito che la
+    funzione non è derivabile: infatti vale
+    \[
+      L_n(\theta, x_1, \dots{}, x_n) =
+      \begin{cases}
+        \frac{\theta^{3n}}{\left(\prod_{i = 1}^n x_i\right)^4} & \text{se } \theta \le
+                                                        \min\left(
+                                                        x_1, \dots{},
+                                                        x_n \right) \\
+        0 & \text{se } \theta > \min\left( x_1, \dots{}, x_n \right)
+      \end{cases}
+    \]
+    Stando così le cose, si vede subito che
+    \(L(\cdot, x_1, \dots{}, x_n)\) raggiunge il valore massimo per
+    \(\theta = \min(x_1, \dots{}, x_n)\). Quindi lo stimatore di
+    massima verosomiglianza è
+    \begin{align*}
+      & \hat \theta_n : \mathbb{X}_n \to \Theta \\
+      & \theta(x_1, \dots{}, x_n) := \min(x_1, \dots{}, x_n) .
+    \end{align*}
+    Cerchiamo la sua legge ora, e per fare ciò ci serve un po' di
+    contesto: ovvero spazi di probabilità
+    \((\Omega, \mathcal{A}, \mathbb{P}_\theta)\) spazi di probabilità
+    al variare di \(\theta \in \Theta\) e una variabile aleatoria
+    \(X := (X_1, \dots{}, X_n) : \Omega \to \mathbb{X}_n\) tali che
+    \[
+      \pi_\theta^{(n)} (E) = \mathbb{P}_\theta [X \in E] \text{ per
+        ogni } E \in \mathcal{X}, \theta \in \Theta
+    \]
+    e le variabili aleatorie
+    \(X_1, \dots{}, X_n : \Omega \to \mathbb{X}\) sono i.i.d. con
+    densità \(f_\theta := L_1(\theta, \cdot)\). Nello specifico,
+    cercheremo la legge per la variabile aleatoria
+    \[
+      \hat \theta_n(X_1, \dots{}, X_n) : \Omega \to \Theta .
+    \]
+    Con ``legge'' intendiamo la densità oppure equivalentemente una
+    funzione di ripartizione. Scegliamo di scrivere la funzione di
+    ripartizione:
+    \[
+      F_\theta (t) = \mathbb{P}_\theta \left[\hat\theta(X_1, \dots{},
+        X_n) \le t\right] = 1 - \left(1-F_{X_1, \theta}(t)\right)^n
+    \]
+    dove con \(F_{X_i, \theta}\) indichiamo la funzione di
+    ripartizione di \(X_i\). Ricordando la relazione che c'è tra
+    funzione di ripartizione e densità di una stessa variabile
+    aleatoria, possiamo calcolare subito la funzione di ripartizione
+    di ciascuna delle \(X_i\):
+    \[
+      F_{X_i, \theta}(t) = \int_{-\infty}^t L_1(\theta, x) \mathrm d x
+      = \begin{cases} 0 & \text{se } t < \theta \\ 1 -
+        \frac{\theta^3}{t^3} & \text{se } t \ge \theta \end{cases}
+    \]
+    Possiamo concludere questo punto allora
+    \[
+      F_{n, \theta}(t) =
+      \begin{cases}
+        0 & \text{se } t < \theta \\
+        1 - \frac{\theta^{3n}}{t^{3n}} & \text{se } t \ge \theta
+      \end{cases} =
+      \left( 1 - \frac{\theta^{3n}}{t^{3n}} \right) \ind{[\theta, +\infty)}{t}.
+    \]
+    
+  \item Per verificare se è distorto e se è asintoticamente distorto
+    dobbiamo in ogni caso calcolare il valore attesto
+    \(\mathbb{E}_{\theta}\left[\hat\theta_n\left( X_1, \dots{}, X_n
+      \right)\right]\). Nel punto precedente abbiamo fatto dei conti
+    che possiamo sfruttare. Infatti, la
+    \(\hat\theta_n(X_1, \dots{}, X_n)\) ha densità
+    \(f_{n, \theta} = F_{n, \theta}^\prime\) e di conseguenza
+    \[
+      \mathbb{E}_{\theta}\left[\hat\theta_n(X_1, \dots{}, X_n)\right]
+      = \int_{\mathbb{R}}t f_{n, \theta}(t) \mathrm d t =
+      \int_{\theta}^{+\infty} t \left(\frac{3n \theta^{3n}}{t^{3n+1}}
+      \right) \mathrm d t = \frac{3n}{3n - 1} \theta.
+    \]
+    Qui di vede subito che non è corretto, ma lo è
+    asintoticamente. Per avere uno stimatore corretto a partire da
+    \(\hat\theta_n\) basta considerare
+    \[
+      \tilde \theta_n := \frac{3n-1}{3n} \hat\theta_n .
+    \]
+    
+  \item Abbiamo visto nel punto precedente che \(\tilde\theta_n\) è
+    corretto e quindi lo è pure asintoticamente. Se riusciamo a
+    dimostrare che è anche
+    \[
+      \sum_{n = 1}^{+\infty} \var_\theta \left[ \tilde \theta_n\left(
+          X_1, \dots{}, X_n \right) \right] < +\infty .
+    \]
+    allora abbiamo finito. Dobbiamo calcolare delle varianze, una per
+    ogni \(n \in \mathbb{N}\).
+    \begin{align*}
+      \var_\theta \left[ \tilde\theta_n \left( X_1, \dots{}, X_n \right) \right]
+      &= \mathbb{E}_\theta \left[ \tilde \theta_n\left(X_1, \dots{}, X_n \right)^2 \right] - \theta^2 = \\
+      &= \left(\frac{3n-1}{3n}\right)^2 \mathbb{E}_\theta \left[ \hat\theta_n\left(X_1, \dots{}, X_n\right)^2 \right] - \theta^2 .
+    \end{align*}
+    Possiamo calcolare la media dell'ultimo membro visto che sopra
+    abbiamo calcolato la funzione di ripartizione di
+    \(\hat\theta_n(X_1, \dots{}, X_n)\):
+    \[
+      \mathbb{E}_\theta \left[ \hat\theta_n\left(X_1, \dots{},
+          X_n\right)^2 \right] = \int_{\mathbb{R}} t^2 f_{n,
+        \theta}(t) \mathrm d t = \int_\theta^{+\infty} t^2
+      \left(\frac{3n \theta^{3n}}{t^{3n+1}} \right) \mathrm d t =
+      \frac{3n}{3n-2} \theta^2 .
+    \]
+    Mettendo tutto insieme abbiamo
+    \[
+      \var_\theta \left[ \tilde\theta_n(X_1, \dots{}, X_n) \right] =
+      \frac{(3n-1)^2}{3n(3n-2)}\theta^2 -\theta^2 =
+      \frac{\theta^2}{3n(3n-2)} .
+    \]
+    In conclusione la sommatoria delle varianze si comporta come la
+    serie \(\sum_{n=1} \frac{1}{9n^2}\), cioè converge.
+    
+  \item Essendo \(\tilde\theta_n\) uno stimatore corretto, allora un
+    intervallo di confidenza di livello \(1-\alpha\), per
+    \(\alpha \in [0, 1]\), è dato da
+    \[
+      C_{n, \alpha} (x_1, \dots{}, x_n) := \set{ \theta \in \Theta
+        \left\mid \abs{\tilde\theta_n(x_1, \dots{}, x_n) - \theta} \le
+          \sqrt{\frac{\var_\theta \left[\tilde\theta_n(X_1, \dots{},
+                X_n)\right]}{\alpha}}\right.} .
+    \]
+    Conosciamo già la varianza e quindi
+    \[
+      \gamma_{n, \alpha} := \sqrt{\frac{\var_\theta
+          \left[\tilde\theta_n(X_1, \dots{}, X_n)\right]}{\alpha}} =
+      \frac{1}{\sqrt{3n(3n-2)\alpha}} \theta .
+    \]
+    Rimane soltanto da risolvere una disequazione
+    \[
+      \abs{\theta - \tilde\theta_n} \le \gamma_{n, \alpha} \theta \iff
+      \left(1-\gamma_{n, \alpha}\right) \theta^2 -2\tilde\theta_n
+      \theta + \tilde\theta_n^2 \le 0
+    \]
+    Se \(\abs{\gamma_{n, \alpha}} < 1\), allora
+    \[
+      \frac{\tilde\theta_n - \gamma_{n,
+          \alpha}}{1-\gamma_{n,\alpha}^2} \le \theta \le
+      \frac{\tilde\theta_n + \gamma_{n,
+          \alpha}}{1-\gamma_{n,\alpha}^2} .
+    \]
+    mentre se \(\abs{\gamma_{n, \alpha}} > 1\), allora
+    \[
+      \theta \le \frac{\tilde\theta_n - \gamma_{n,
+          \alpha}}{1-\gamma_{n,\alpha}^2} \text{ oppure } \theta \ge
+      \frac{\tilde\theta_n + \gamma_{n,
+          \alpha}}{1-\gamma_{n,\alpha}^2} .
+    \]
+    In ogni caso, comunque fissato \(\alpha \in [0, 1]\), si ha che
+    gli intervalli di confidenza sono
+    \[
+      C_{n, \alpha} (x_1, \dots{}, x_n) = \left[\frac{\tilde\theta_n -
+          \gamma_{n, \alpha}}{1-\gamma_{n,\alpha}^2},
+        \frac{\tilde\theta_n + \gamma_{n,
+            \alpha}}{1-\gamma_{n,\alpha}^2}\right]
+    \]
+    definitivamente per \(n \to +\infty\), cioè da un certo \(n\) in
+    poi le regioni di confidenza sono questi intervalli.  \qedhere
+  \end{enumerate}
+\end{soluzione}
+
+
+
+\begin{esercizio}[Problema 3, 12/09/2024]
+  Si consideri il modello a \(n\) prove ripetute avente modello di
+  base \(\mathbb{X}_1 := \mathbb{R}_+\),
+  \(\mathcal{X}_1 := \mathcal{B} \mathbb{R}_+\),
+  \(\Theta := \mathbb{R}_+\) e
+  \[
+    \deriv{\pi_{\theta}^{(1)}}{\lambda_1}(x) =
+    \frac{3\theta^3}{(\theta + x)^4}
+  \]
+  dove \(\lambda_1\) è la misura unidimensionale di Lebesgue ristretta
+  a \(\mathbb{R}_+\).
+  \begin{enumerate}[leftmargin=*]
+  \item Dimostrare che
+    \[
+      S_n (x_1, \dots{}, x_n) = \frac 2 n \sum_{j=1}^nx_j
+    \]
+    è uno stimatore corretto di \(\theta\).
+
+  \item Dopo aver calcolato
+    \(\var_\theta \left[ S_n\left( X_1, \dots{}, X_n \right)
+    \right]\), dimostrare (usando i teoremi visti in classe) che
+    \(S_n\) è debolmente consistente.
+    
+  \item Discutere se vale la disuguaglianza
+    \[
+      \var_\theta \left[ S_n\left( X_1, \dots{}, X_n \right) \right] >
+      \frac{1}{n I_1(\theta)}
+    \]
+    dove \(I_1\) è l'{\em informazione di Fisher} del modello di base.
+    
+  \item Verificare (usando i teoremi di probabilità) che per ogni
+    \(\theta \in \Theta\)
+    \[
+      \sqrt{n} \left( S_n\left( X_1, \dots{}, X_n \right) - \theta
+      \right) \to N(0, F(\theta)) \text{ in distribuzione}
+    \]
+    rispetto alla probabilità \(\mathbb{P}_\theta\), dove
+    \(F : \Theta \to \mathbb{R}\) è una opportuna funzione continua.
+
+  \item Usare il risultato precedente per calcolare un intervallo di
+    confidenza asintotico
+    \(C_n(X_1, \dots{}, X_n) \subset \mathbb{R}_+\) di livello
+    \(1-\alpha\) per il parametro \(\theta\).
+  \end{enumerate}
+\end{esercizio}
+
+\begin{soluzione}
+  \begin{enumerate}
+  \item Come al solito, dobbiamo calcolare
+    \[
+      \mathbb{E}_\theta \left[ S_n\left(X_1, \dots{}, X_n\right)
+      \right]
+    \]
+    dove \(X_1, \dots{}, X_n\) sono variabili aleatorie a valori in
+    \(\mathbb{X}_1\) i.i.d. con densità
+    \begin{align*}
+      & f_\theta : \mathbb{X}_o \to \mathbb{R} \\
+      & f_\theta (x) := \frac{\mathrm d \pi_{\theta}^{(1)}}{\mathrm d \lambda_1}(x) = \frac{3\theta^3}{(\theta + x)^4}
+    \end{align*}
+    Eseguiamo il conto del valore atteso quindi
+    \[
+      \mathbb{E}_\theta \left[ S_n\left(X_1, \dots{}, X_n\right)
+      \right] = \frac{2}{n} \sum_{j=1}^n \mathbb{E}_\theta X_j = 2
+      \mathbb{E}_\theta X_1
+    \]
+    Il valore atteso dell'ultimo membro si può calcolare attraverso la
+    densità
+    \[
+      \mathbb{E}_\theta X_1 = \int_{\mathbb{X}_1} x f_\theta (x)
+      \mathrm d x = 3\theta^3 \int_1^{+\infty} \frac{x}{(\theta +
+        x)^4} \mathrm d x
+    \]
+    Rimane da calcolare solo l'integrale all'ultimo membro:
+    \[
+      \int_1^{+\infty} \frac{x}{(\theta + x)^4} = \int_1^{+\infty}
+      \frac{1}{(\theta+x)^3} \mathrm d x - \theta
+      \int_1^{+\infty}\frac{1}{(\theta+x)^4} \mathrm d x =
+      \frac{1}{6\theta^2} .
+    \]
+    Pertanto \(S_n\) è uno stimatore corretto di \(\theta\) perché
+    \[
+      \mathbb{E}_\theta \left[ S_n\left(X_1, \dots{}, X_n\right)
+      \right] = \theta
+    \]
+
+  \item Calcoliamo le varianze conoscendo la densità delle variabili
+    aleatorie i.i.d. \(X_1, \dots{}, X_n\) del punto precedente:
+    \[
+      \var_\theta \left[ S_n\left( X_1, \dots{}, X_n \right) \right] =
+      \frac{4}{n^2} \sum_{j=1}^n \var_\theta X_j = \frac{4}{n}
+      \var_\theta X_1 = \frac{4}{n} \left( \att_\theta X_1^2 -
+        \left(\att_\theta X_1 \right)^2 \right)
+    \]
+    Dal punto precedente sappiamo che
+    \(\att_\theta X_1 = \frac{\theta}{2}\). Calcoliamo l'altro valore
+    atteso:
+    \[
+      \att X_1^2 = \int_{\mathbb{X}_1} x^2 f_\theta (x) \mathrm d x =
+      3\theta^3 \int_1^{+\infty} \frac{x^2}{(\theta+x)^4} \mathrm d x
+      .
+    \]
+    L'integrale al secondo membro si può calcolare facilmente, per
+    esempio ricordando che \(x^2 = (\theta+x)^2-\theta^2-2\theta
+    x\). Alla fine si arriva a
+    \[
+      \var_\theta X_1 = \frac{3}{4}\theta^2
+    \]
+    e quindi a
+    \[
+      \var_\theta \left[ S_n\left( X_1, \dots{}, X_n \right) \right] =
+      \frac{4}{n} \left( \theta^2 - \frac{\theta^2}{4} \right) =
+      \frac{3}{n} \theta^2 .
+    \]
+    
+  \item Il modello è regolare di classe \(C^2\), quindi l'informazione
+    di Fisher del modello di base si scrive come
+    \[
+      I_1 (\theta) = - \att_\theta \left[ \pderiv 2 \theta \log
+        f_\theta(X) \right] .
+    \]
+    Calcoliamo quindi il valore atteso al secondo membro:
+    \begin{align*}
+      \att_\theta \left[ \pderiv 2 \theta \log f_\theta(X) \right] &= \att_\theta \left[ -\frac{3}{\theta^2} + \frac{4}{(\theta+X)^2} \right] = \\
+                                                                   &= - \frac{3}{\theta^2} + 4 \att_\theta \left[ \frac{1}{(\theta + X)^2} \right] = \\
+                                                                   &= - \frac{3}{\theta^2} + 4 \int_1^{+\infty} \frac{1}{(\theta+x)^2} f_\theta (x) \mathrm dx = \\
+                                                                   &= - \frac{3}{\theta^2} + \frac{12}{5\theta^2} = - \frac{3}{5\theta^2}
+    \end{align*}
+    È facile verificare la disuguaglianza a questo punto.
+    
+  \item Usiamo quanto ricavato nei punti precedenti: in particolare,
+    se \(\{X_n \mid n \in \mathbb{N}\}\) è una successione di
+    variabili aleatorie i.i.d. con densità
+    \(f_\theta = \deriv{\pi_\theta^{(1)}}{\lambda_1}\), allora per
+    ogni \(j \in \mathbb{N}\)
+    \begin{align*}
+      & \att_\theta X_j = \frac{1}{2} \theta \\
+      & \var_\theta X_j = \frac{3}{4} \theta^2
+    \end{align*}
+    Quindi per il {\sc Teorema Centrale del Limite}
+    \[
+      \sqrt n \left( \frac 1 n \sum_{j=1}^nX_j - \frac{\theta}{2}
+      \right) \to \mathcal{N} \left(0, \frac 3 4 \theta^2\right).
+    \]
+    da cui segue che
+    \[
+      \sqrt n \left(\frac 2 n \sum_{j=1}^nX_j - \theta \right) \to
+      \mathcal{N} \left(0, 3 \theta^2\right)
+    \]
+    che è quello che volevamo dimostrare. In particolare,
+    \(F(\theta) = 3\theta^2.\)
+
+  \item Per il punto precedente, abbiamo visto che
+    \[
+      Y_{n, \theta} := \frac{1}{\theta} \sqrt{\frac{n}{3}} \left(
+        S_n\left( X_1, \dots{}, X_n \right) - \theta \right)
+    \]
+    converge in distribuzione ad una \(Z \sim \mathcal{N} ( 0,
+    1)\). In particolare
+    \[
+      \lim_{n \to +\infty} \mathbb{P}_\theta \left[
+        -z_{\frac{\alpha}{2}} \le Y_{n, \theta} \le
+        z_{\frac{\alpha}{2}} \right] = \mathbb{P}_\theta \left[
+        -z_{\frac{\alpha}{2}} \le Z \le z_{\frac{\alpha}{2}} \right] .
+    \]
+    Sappiamo quanto vale l'ultimo membro: se
+    \(\Phi : \mathbb{R} \to [0,1]\) è la funzione di ripartizione di
+    \(Z\) e \(z_\alpha\) è definito tale che
+    \(\Phi \left( z_\alpha \right) = 1-\alpha\), allora
+    \[
+      \lim_{n \to +\infty} \mathbb{P}_\theta \left[
+        -z_{\frac{\alpha}{2}} \le Y_{n, \theta} \le
+        z_{\frac{\alpha}{2}} \right] = 1-\alpha .
+    \]
+    Possiamo quindi scegliere
+    \begin{align*}
+      & C_n \left( x_1, \dots{}, x_n \right) := \left\{ \theta \in \Theta \mid -z_{\frac{\alpha}{2}} \le
+        Y_{n, \theta}\left( x_1, \dots{}, x_n \right) \le z_{\frac{\alpha}{2}} \right\} = \\
+      &= \left\{ \theta \in \Theta \left\mid \theta\left( 1-z_{\frac{\alpha}{2}}\sqrt{\frac{3}{n}} \right) \le
+        S_n\left( x_1, \dots{}, x_n \right) \le
+        \theta \left(1-z_{\frac{\alpha}{2}}\sqrt{\frac{3}{n}} \right)
+        \right. \right\} \qedhere
+    \end{align*}
+  \end{enumerate}
+\end{soluzione}
+
+\begin{esercizio}[Problema 4, 29/01/2024]
+  Considerare il modello a \(n\) prove ripetute avente come modello
+  base \(\mathbb{X}_1 := [0, +\infty)\),
+  \(\mathcal{X}_1 := \mathcal{B} \mathbb{X}_1\),
+  \(\Theta := (0, +\infty)\) con funzione di verosomiglianza
+  \[
+    L_1(\theta, x) := \deriv{\pi_{\theta}^{(1)}}{\lambda_1}(x) :=
+    \frac{1}{4\sqrt{\theta x}} \ind{[0,4\theta]}{x}
+  \]
+  dove \(\lambda_1\) è la misura di Lebesgue ristretta a
+  \(\mathbb{X}_1\).
+  \begin{enumerate}[leftmargin=*]
+  \item Scrivere lo stimatore di massima verosomiglianza
+    \(\hat \theta_n : \mathbb{X}_n \to \Theta\) per il modello a \(n\)
+    prove indipendenti.
+    
+  \item Dimostrare che \(\hat \theta_n\) è distorto ma asintoticamente
+    corretto. Dimostrare che \(\hat \theta_n\) è fortemente
+    consistente.
+    
+  \item Fissare \(\theta_1 > 0\) e considerare il test
+    \[
+      H_1 : \theta \in \Theta_1 := (0, \theta_1] \quad \text{e} \quad
+      H_1 : \theta \in (\theta_1, +\infty) .
+    \]
+    Calcolare la regione critica \(G_{n, \alpha}\) per il test
+    uniformemente più potente per le ipotesi \(H_1\) e \(H_1\).
+    
+  \item Per \(n\) fissato, calcolare la funzione \(p\)-value della
+    famiglia di test formulati nel punto precedente.
+    
+  \item Calcolare la funzione potenza per il test \(G_{n, \alpha}\),
+    ovvero
+    \[
+      \beta_{G_{n, \alpha}} (\theta) := \mathbb{P}_{\theta} \left[X
+        \in G_{n, \alpha}\right] .
+    \]
+  \end{enumerate}
+\end{esercizio}
+
+\begin{soluzione}
+  \begin{enumerate}
+  \item La funzione di verosomiglianza per il modello statistico a
+    \(n\) prove indipendenti è
+    \begin{align*}
+      & L_n : \Theta \times \mathbb{X}_n \to [0, \infty] \\
+      & L_n (\theta, x_1, \dots{}, x_n) := \frac{1}{4^n\theta^{\frac{n}{2}}}
+        \prod_{i = 1}^n \frac{\ind{[0, 4\theta]}{x_i}}{\sqrt{x_i}}
+    \end{align*}
+    Osservando che
+    \[
+      L_n(\theta, x_1, \dots{}, x_n) =
+      \begin{cases}
+        0 & \text{se } \max \left(x_1, \dots{}, x_n\right) > 4\theta \\
+        \frac{1}{4^n\theta^{\frac{n}{2}}}
+        \prod_{i = 1}^n \frac{1}{\sqrt{x_i}} & \text{altrimenti}        
+      \end{cases}
+    \]
+    ovvero che
+    \[
+      L_n(\theta, x_1, \dots{}, x_n) =
+      \begin{cases}
+        0 & \text{se } \theta < \frac{\max \left(x_1, \dots{}, x_n\right)}{4} \\
+        \frac{1}{4^n\theta^{\frac{n}{2}}}
+        \prod_{i = 1}^n \frac{1}{\sqrt{x_i}} & \text{altrimenti}        
+      \end{cases}
+    \]
+    si ha che la funzione
+    \(L_n(\cdot, x_1, \dots{}, x_n) : \Theta \to [0, +\infty]\)
+    raggiunge il valore massimo in
+    \[
+      \hat \theta_n (x_1, \dots{}, x_n) = \frac{\max \left(x_1,
+          \dots{}, x_n\right)}{4} .
+    \]
+    
+  \item Dobbiamo quindi calcolare il valore atteso
+    \[
+      \att_{\theta}\left[\hat \theta_n\left(X_1, \dots{},
+          X_n\right)\right]
+    \]
+    dove \(X_1, \dots{}, X_n\) sono variabili aleatorie a valori in
+    \(\mathbb{X}_1\) i.i.d. con densità
+    \(f_{\theta} := L_1(\theta, \cdot)\). Come prima cosa,
+    \[
+      \att_{\theta}\left[\hat \theta_n\left(X_1, \dots{},
+          X_n\right)\right] = \frac{1}{4} \att_{\theta}\left[\max
+        \left(X_1, \dots{}, X_n\right)\right] .
+    \]
+    Sappiamo come calcolare la funzione di ripartizione di
+    \(\max \left(X_1, \dots{}, X_n\right)\):
+    \[
+      F_{n, \theta}(t) := \left( \int_{-\infty}^t f_\theta(x) \mathrm
+        d x \right)^n .
+    \]
+    L'integrale al secondo membro è
+    \[
+      \int_{-\infty}^t f_{\theta}(x) \mathrm d x = \frac{1}{4 \sqrt
+        \theta} \int_{(-\infty, t] \cap [0, 4\theta]}\frac{1}{\sqrt x}
+      \mathrm d x =
+      \begin{cases}
+        0 & \text{se } t < 0 \\
+        \frac{\sqrt{\min(4\theta, t))}}{2\sqrt \theta} & \text{se } t \ge 0
+      \end{cases}
+    \]
+    e quindi la funzione di ripartizione di
+    \(\max \left( X_1, \dots{}, X_n \right)\) è
+    \[
+      F_{n, \theta}(t) :=
+      \begin{cases}
+        0 & \text{se } t < 0 \\
+        \min \left( 1, \frac{t^{\frac{n}{2}}}{2^n \theta^{\frac{n}{2}}} \right) & \text{se } t \ge 0
+      \end{cases}
+    \]
+    Possiamo ora facilmente scrivere la densità di
+    \(\max \left( X_1, \dots{}, X_n \right)\):
+    \[
+      f_{n,\theta}(t) = F_{n, \theta}^\prime(t)) =
+      \begin{cases}
+        0 & \text{se } t < 0 \text{ oppure } t > 4\theta \\
+        \frac{n}{2^{n+1}\theta^{\frac{n}{2}}} t^{\frac{n}{2}} & \text{se }
+                                                                0 \le t \le 4 \theta
+      \end{cases}
+    \]
+    Il calcolo del valore atteso è si può quindi concludere
+    \[
+      \att_\theta\left[\hat \theta_n \left( X_1, \dots{}, X_n
+        \right)\right] = \frac{n}{n+2}\theta.
+    \]
+    Pertanto, lo stimatore di massima verosomiglianza è distorto, ma
+    asintoticamente corretto.
+
+  \item Fissati \(\theta_0 < \theta_1\), calcoliamo il {\em rapporto
+      di verosomiglianza monotono}
+    \begin{align*}
+      \mathrm{LR}_n \left( x_1, \dots{}, x_n \right) &:= \frac{L_n
+                                                       \left(\theta_0, x_1,
+                                                       \dots{}, x_n
+                                                       \right)}{L_n
+                                                       \left(\theta_1, x_1,
+                                                       \dots{}, x_n
+                                                       \right)} = \\
+                                                     &= \left( \frac{\theta_1}{\theta_0} \right)^{\frac{n}{2}} \frac{\ind{[0, 4\theta_0]}{\max \left( x_1, \dots{}, x_n \right)}}{\ind{[0, 4\theta_1]}{\max \left( x_1, \dots{}, x_n \right)}} \\
+                                                     &= \left(
+                                                       \frac{\theta_1}{\theta_0}
+                                                       \right)^{\frac{n}{2}}
+                                                       \frac{\ind{[0,
+                                                       \theta_0]}{\hat \theta_n
+                                                       \left( x_1,
+                                                       \dots{}, x_n
+                                                       \right)}}{\ind{[0,
+                                                       \theta_1]}{\hat \theta_n
+                                                       \left( x_1,
+                                                       \dots{}, x_n
+                                                       \right)}} .
+    \end{align*}
+    che si può scrivere molto più semplicemente
+    \[
+      \mathrm{LR}_n \left( x_1, \dots{}, x_n \right) =
+      \begin{cases}
+        \left( \frac{\theta_1}{\theta_0} \right)^{\frac{n}{2}} & \text{se } \hat \theta_n \left( x_1, \dots{}, x_n
+                                                                 \right) \le \theta_0 \\
+        0 & \text{altrimenti}
+      \end{cases}
+    \]
+    Una regione critica basata sul rapporto di verosomiglianza
+    monotono è
+    \[
+      G_{n, \alpha} := \left\{ \left( x_1, \dots{}, x_n \right) \in
+        \mathbb{X}_n \mid \hat \theta_n \left( x_1, \dots{}, x_n
+        \right) \ge c_{n,\alpha} \right\}
+    \]
+    dove \(c_{n,\alpha}\) è da determinare in modo tale che
+    \[
+      \mathbb{P}_{\theta_0} \left[ X \in G_{n, \alpha} \right] =
+      \alpha .
+    \]
+    Possiamo calcolare questa probabilità usando la funzione di
+    ripartizione di \(\max \left( X_1, \dots{}, X_n \right)\), dove
+    \(X_1, \dots{}, X_n\) sono variabili aleatorie i.i.d. con
+    distribuzione \(f_\theta\), e che abbiamo già calcolato:
+    \begin{align*}
+      \mathbb{P}_{\theta_0} \left[ X \in G_{n, \alpha} \right] &= \mathbb{P}_{\theta_0} \left[ \max
+                                                                 \left( X_1, \dots{}, X_n
+                                                                 \right) \ge 4 c_{n, \alpha}
+                                                                 \right] = \\
+                                                               &= 1 - \mathbb{P}_{\theta_0} \left[ \max
+                                                                 \left( X_1, \dots{}, X_n
+                                                                 \right) \le 4 c_{n, \alpha}
+                                                                 \right] = \\
+                                                               &= 1 - F_{n, \theta_0}\left(
+                                                                 4c_{n,\alpha} \right) = \\
+                                                               &= 1 -
+                                                                 \left( \frac{c_{n,\alpha}}{\theta_0} \right)^{\frac{n}{2}}
+    \end{align*} 
+    Quindi basta scegliere
+    \(c_{n, \alpha} = \theta_0 (1-\alpha)^{\frac{2}{n}}\) e una
+    regione critica per il test uniformemente più potente è
+    \begin{align*}
+      G_{n, \alpha} &= \left\{ \left( x_1, \dots{}, x_n \right) \in \mathbb{X}_n \mid
+                      \hat \theta_n \left( x_1, \dots{}, x_n \right) \ge \theta_0 (1-\alpha)^{\frac{2}{n}}
+                      \right\} = \\
+                    &= \left\{ \left( x_1, \dots{}, x_n \right) \in \mathbb{X}_n \mid
+                      \max \left( x_1, \dots{}, x_n \right) \ge 4 \theta_0 (1-\alpha)^{\frac{2}{n}}
+                      \right\} 
+    \end{align*}
+
+  \item Vogliamo ora calcolare il \(p\)-value della famiglia di test
+    \(\left\{ G_{n, \alpha} \mid \alpha \in [0, 1] \right\}\), vale a
+    dire la funzione \(p_n : \mathbb{X}_n \to [0,1]\) definita da
+    \begin{align*}
+      p_n (x) &= \inf \left\{ \alpha \in [0, 1] \mid \hat \theta_n (x) \ge \theta_0 (1-\alpha)^{\frac{2}{n}} \right\} = \\
+              &= \max \left(0, 1-\left(\frac{\hat \theta_n (x)}{\theta_0}\right)^{\frac{n}{2}}\right) .
+    \end{align*}
+    
+  \item Nei precedenti punti abbiamo calcolato ciò che ci serve:
+    \begin{align*}
+      \beta_{G_{n, \alpha}} (\theta) &= \mathbb{P}_\theta \left[X \in G_{n, \alpha}\right] = \\
+                                     &= \mathbb{P}_\theta \left[ \max \left( X_1, \dots{}, X_n
+                                       \right) \ge 4 \theta_0 (1-\alpha)^{\frac{2}{n}} \right] = \\
+                                     &= 1 - \mathbb{P}_\theta \left[ \max \left( X_1, \dots{}, X_n
+                                       \right) \le 4 \theta_0 (1-\alpha)^{\frac{2}{n}} \right] =
+      \\
+                                     &= 1 - F_{n, \theta} \left( 4\theta_0(1-\alpha)^{\frac{2}{n}}
+                                       \right) = \\
+                                     &= 1 -
+                                       \left(\frac{\theta_0}{\theta}\right)^{\frac{n}{2}}(1-\alpha) .\qedhere
+    \end{align*}
+  \end{enumerate}
+\end{soluzione}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "main"
+%%% TeX-engine: luatex
+%%% ispell-local-dictionary: "italian"
+%%% End:

@@ -1,0 +1,251 @@
+
+\section{Statistica Descrittiva}
+
+\begin{esercizio}[Problema 1, scritto del 12/02/2024]
+  Un'indagine ISTAT su $n = 100$ famiglie analizza la relazione tra il
+  carattere $X$ relativo alla numerosità del nucleo familiare e il
+  carattere $Y$ realtivo al numero di locali della rispettiva
+  abitazione. L'indagine produce la seguente tabella
+  \[
+    \begin{array}{c|ccc}
+      & X = 1 & X = 2 & X = 3 \\
+      \midrule
+      Y = 2 & 20    & 10    & 7     \\
+      Y = 3 & 9     & 13    & 13    \\
+      Y = 4 & 2     & 5     & 21
+    \end{array}
+  \]
+  Si affrontino i seguenti quesiti.
+  \begin{enumerate}[leftmargin=*]
+  \item Calcolare la media aritmetica (pesata) e la mediana del
+    carattere $Y$.
+  \item Valutare la variabilità di $Y$ tramite l'uso delle differenza
+    media semplice (di ordine $p = 1$).
+  \item Valutare la concentrazione del carattere $Y$ rispetto alla
+    distribuzione uniforme, esplicitando il grafico della curva di
+    Lorentz-Gini e calcolando un opportuno indice di concentrazione.
+  \item Calcolare la tabella relativa alla distribuzione di
+    probabilità congiunta corrispondente alla situazione (ideale) di
+    indipendenza dei due caratteri.
+  \item Scegliere un indice di connessione tra $X$ e $Y$ e calcolarlo
+    numericamente coi dati forniti.
+  \item Calcolare la tabella corrispondente alla distribuzione di
+    probabilità congiunta corrispondente alla situazione (ideale) di
+    massima concordanza tra i due caratteri.
+  \item Scegliere un indice di concordanza tra $X$ e $Y$ e calcolarlo
+    numericamente coi dati forniti.
+  \end{enumerate}
+\end{esercizio}
+
+\begin{soluzione}
+  {\color{red} [Da riscrivere. Vedere parte commentata
+    nel sorgente \TeX{}.]}
+\end{soluzione}
+
+% \begin{soluzione}
+%   \begin{enumerate}
+%   \item Cerchiamo di interpretare la tabella in termini più
+%     astratti. Abbiamo uno spazio campionario che è la popolazione
+%     sotto indagine e che chiamiamo $\Omega$. Questo insieme è munito della
+%     sigma-algebra $2^\Omega$ e della misura del conteggio
+%     $\mu : 2^\Omega \to [0, +\infty]$ che manda ogni singoletto
+%     $\set{\omega}$ in $1$. Poi, $X, Y : \Omega \to \mathbb{R}$ sono due variabili aleatorie
+%     che prendono solo un insieme finito di valori, $\set{1, 2, 3}$ e
+%     $\set{2, 3, 4}$ rispettivamente. In ogni cella della tabella
+%     stanno scritti semplicemente i valori
+%     \[
+%       \mu\left[ X = i, Y = j\right] .
+%     \]
+%     Possiamo ``normalizzare tutto'', poiché $\mu$ è finita, e
+%     considerare la misura di probabilità
+%     $\mathbb{P} : 2^\Omega \to [0, 1]$ che manda ogni singoletto
+%     $\set{\omega}$ in $\frac 1 n$. La misura indotta
+%     \[
+%       \pi_Y : \mathbb{B} \mathbb{R} \to [0, 1] \,,\ \pi_Y (E) := \mathbb{P} [ Y \in E ] .
+%     \]
+%     rappresenta quindi la distribuzione della variabile aleatoria
+%     $Y : \Omega \to \mathbb{R}$. Possiamo quindi scrivere la funzione di ripartizione
+%     \[
+%       F_Y(t) = \mathbb{P} [Y \le t] = \frac{37}{100}\ind{[2, +\infty)}{t} +
+%       \frac{35}{100}\ind{[3, +\infty)}{t} + \frac{28}{100}\ind{[4, +\infty)}{t}
+%       .
+%     \]
+%     Ecco la media aritmetica del carattere $Y$ è quindi
+
+% \[
+%   \bar Y := \int_{\mathbb{R}} t \mathrm d F_Y(t) = \frac{37}{100} \cdot 2 +
+%   \frac{35}{100} \cdot 3 + \frac{28}{100} \cdot 7 = 2.91
+% \]
+% Calcoliamo anche la mediana del carattere $Y$. Abbiamo già calcolato
+% la funzione di ripartizione, non rimane che calcolare anche la sua
+% \enquote{inversa}
+% \[
+%   \inv{F_Y}(s) = \inf \set{t \in \mathbb{R} \mid F(t) \ge s}.
+% \]
+% La mediana è semplicemente
+% \[
+%   \inv{F_Y} \left(\frac 12\right) = 3 .
+% \]
+
+% \item Richiamiamo questo indice
+%   \[
+%     \frac{1}{{n \choose 2}} \sum_{1 \le i < j \le n} \abs{Y(\omega_i) - Y(\omega_j)}
+%   \]
+%   dove $\Omega = \set{\omega_i \mid i = 1, \dots{}, 100}$. La differenza
+%   $\abs{2-3} = 1$ occorre $37 \cdot 35$, la differenza $\abs{2-4} = 2$
+%   occorre $37 \cdot 28$, la differenza $\abs{3-4} = 1$ occorre
+%   $35 \cdot 28$ volte. Quindi ecco eseguito il conto sopra
+%   \[
+%     \frac{2}{100 \cdot 99} (1 \cdot 37 \cdot 35 + 2 \cdot 37 \cdot 28 + 1 \cdot 35 \cdot 28) \approx
+%     0.88 .
+%   \]
+
+% \item ...
+% \end{enumerate}
+% \end{soluzione}
+
+
+\begin{esercizio}[Problema 2, 12/09/2024]
+  Sullo spazio misurabile
+  \(\left( \Omega, \mathcal{F} \right) := \left( (1, +\infty), \mathbb{B} (1,+\infty) \right)\)
+  si considera la misura di riferimento
+  \[
+    Q : \mathcal{F} \to [0,1] \,,\ Q(B) := \int_{B} x^{-2} \mathrm d x
+  \]
+  e la misura di prova
+  \[
+    P : \mathcal{F} \to [0,1] \,,\ P(B) := \alpha \int_{B} x^{-1-\alpha} \mathrm d x
+  \]
+  dove \(\alpha \in (0,1)\).
+  \begin{enumerate}[leftmargin=*]
+  \item Calcolare la mediana di entrambe le misure.
+
+  \item Discutere la mutua variabilità rispetto alla distanza
+    \(d(x, y) := \left\lvert x-y \right\rvert\). In particolare,
+    confrontare le due differenze medie di ordine 1 sfruttando la {\em
+      formula di de Finetti-Paciello} secondo cui per una funzione di
+    ripartizione \(F\) con supporto in \((0, +\infty)\) vale l'identità
+    \[
+      \int_{0}^{+\infty} \int_{0}^{+\infty} \left\lvert x-y \right\rvert \mathrm d
+      F(x) \mathrm d F(y) = 2 \int_{0}^{+\infty} F(x) [1-F(x)] \mathrm d x .
+    \]
+
+  \item Dopo aver verificato che \(P\) è assolutamente continua
+    rispetto a \(Q\), calcolare esplicitamente la curva di
+    concentrazione di \(P\) rispetto a \(Q\).
+
+  \item Calcolare l'area di concentrazione e, in particolare, dire se
+    aumenta o diminuisce in funzione di \(\alpha\).
+  \end{enumerate}
+\end{esercizio}
+
+\begin{soluzione}
+  \begin{enumerate}
+  \item Calcoliamo quindi le funzioni di ripartizione, cioè
+    \[
+      F_Q : \mathbb{R} \to [0,1] \,,\ F_Q(t) := Q \left\{ \omega \in \Omega \mid \omega < t \right\}
+      =
+      \begin{cases}
+        0 & \text{se } t \le 1 \\
+        1-\frac{1}{t} & \text{se } t > 1
+      \end{cases}
+    \]
+    e
+    \[
+      F_P : \mathbb{R} \to [0,1] \,,\ F_P(t) := P \left\{ \omega \in \Omega \mid \omega < t \right\}
+      =
+      \begin{cases}
+        0 & \text{se } t \le 1 \\
+        1-\frac{1}{t^\alpha} & \text{se } t > 1
+      \end{cases}
+    \]
+    Le rispettive mediane sono quindi
+    \begin{align*}
+      & F_Q^{-1} \left( \frac{1}{2} \right) = \inf \left\{ s \in
+        \mathbb{R} \left\mid F_Q (s) \ge \frac{1}{2} \right. \right\} = 2 \\
+      & F_P^{-1} \left( \frac{1}{2} \right) = \inf \left\{ s \in
+        \mathbb{R} \left\mid F_P (s) \ge \frac{1}{2} \right. \right\} = 2^{\frac{1}{\alpha}} \\
+    \end{align*}
+
+  \item {\color{red} [Da rivedere meglio\dots]}
+
+  \item Sia \(E \in \mathcal{F}\) qualsiasi tale che \(Q(E) = 0\). Ne segue che
+    \(E\) sia una insieme di misura nulla secondo la misura
+    unidimensionale di Lebesgue. Ma allora anche \(P(E) = 0\). Quindi
+    per il {\sc Teorema di Radon-Nikodym} esiste unica a meno
+    uguaglianza quasi ovunque una funzione
+    \(Z : \Omega \to [0, +\infty]\) misurabile tale che
+    \[
+      P(E) = \int_{E} Z \mathrm d Q \text{ per ogni } E \in \mathcal{F} .
+    \]
+    Questa \(Z\) è la {\em derivata di Radon-Nikodym} e si scrive
+    \(\frac{\mathrm d P}{\mathrm d Q}\). Calcoliamola allora. Se
+    indichiamo con \(\lambda\) la misura indotta su
+    \((\Omega, \mathcal{F})\) dalla misura di Lebesgue, osserviamo anche che
+    \(P\) e \(Q\) sono entrambe assolutamente continue rispetto a
+    \(\lambda\). Quindi
+    \[
+      P(E) = \int_{E} Z \mathrm d Q = \int_{E} Z \frac{\mathrm d Q}{\mathrm
+        d \lambda} \mathrm d \lambda .
+    \]
+    All'ultimo membro sappiamo quanto vale
+    \(\frac{\mathrm d Q}{\mathrm d \lambda}\) quasi ovunque: grazie al {\sc
+      Teorema di Radon-Nikodym} infatti possiamo dire
+    \[
+      \frac{\mathrm d Q}{\mathrm d \lambda} (x) = x^{-2} \text{ per quasi
+        ogni } x \in \Omega .
+    \]
+    Ancora nuovamente per il {\sc Teorema di Radon-Nikodym}, applicato
+    questa volta alla coppia \(P\) e \(\lambda\), si ha che
+    \[
+      Z(x) \frac{\mathrm d Q}{\mathrm d \lambda} (x) = \alpha x^{-1-\alpha} \text{ per
+        quasi ogni } x \in \Omega .
+    \]
+    Da cui possiamo concludere che
+    \[
+      Z(x) = \alpha x^{1-\alpha} \text{ per quasi ogni } x \in \Omega .
+    \]
+    In realtà, possiamo scegliere senza perdere nulla che \(Z\) di
+    definire in questo modo su {\em tutto} \(\Omega\), visto che
+    l'integrale di Lebesgue ignora insiemi di misura nulla.
+
+    Calcoliamo la funzione di ripartizione di
+    \(Z = \frac{\mathrm d P}{\mathrm d Q}\):
+    \begin{align*}
+      F(t) &:= Q \left\{ x \in \Omega \mid Z(x) \le t \right\} = \\
+           &= Q \left\{ x > 1 \left\mid x \le \left( \frac{t}{\alpha}
+             \right)^{\frac{1}{1-\alpha}} \right. \right\}
+    \end{align*}
+    Qui
+    \[
+      F(t) =
+      \begin{cases}
+        0 & \text{se } t \le \alpha \\
+        1-\left( \frac{\alpha}{t} \right)^{\frac{1}{1-\alpha}} &  \text{se }
+                                                       t > \alpha
+      \end{cases} .
+    \]
+    Ecco l'inversa generalizzata di \(F\): per \(y \in (0, 1)\)
+    \[
+      F^{-1}(y) = \frac{\alpha}{(1-y)^{1-\alpha}} = \alpha (1-y)^{\alpha-1} .
+    \]
+    Possiamo finalmente scrivere la {\em funzione di concentrazione}
+    \[
+      \phi (s) := \int_0^s F^{-1}(y) \mathrm d y = 1 - (1-s)^\alpha .
+    \]
+    
+  \item Abbiamo a questo punto tutto quello che serve per calcolare
+    l'{\em area di concentrazione}
+    \[
+      \int_{0}^{1} [s-\phi(s)] \mathrm d s = \frac{1}{\alpha+1} - \frac12 .
+    \]
+    In particolare, l'area è decrescente rispetto ad \(\alpha\).  \qedhere
+  \end{enumerate}
+\end{soluzione}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "main"
+%%% TeX-engine: luatex
+%%% ispell-local-dictionary: "italian"
+%%% End:

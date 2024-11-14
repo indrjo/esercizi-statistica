@@ -1,0 +1,91 @@
+
+\documentclass[ structure = article
+              , maketitlestyle = standard
+              , secstyle = center
+              , secfont = roman
+              , liststyle = aligned
+              ]{suftesi}
+
+\usepackage[no-math]{fontspec}
+\usepackage[rm,tt=false]{libertine}
+\usepackage[scale=.85]{sourcecodepro}
+
+\usepackage{polyglossia}
+\setmainlanguage{italian}
+
+\usepackage[italian=quotes]{csquotes}
+
+\usepackage{hyperref}
+\hypersetup{ breaklinks
+           , hidelinks
+           }
+
+%\usepackage{anyfontsize}
+%\usepackage{indentfirst}
+
+\usepackage{booktabs}
+
+% \usepackage{abstract}
+%\renewcommand\abstracttextfont\normalfont
+
+%\usepackage[ bibstyle = alphabetic
+%           , citestyle = alphabetic
+%           , pluralothers=true
+%           , autolang=langname
+%           ]{biblatex}
+%\addbibresource{biblio.bib}
+
+\usepackage{libertinust1math}
+\usepackage{MnSymbol}
+\usepackage{mathtools}
+\let\underbrace\LaTeXunderbrace
+\let\overbrace\LaTeXoverbrace
+\usepackage[bb=ams]{mathalfa}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{esercizio}{Esercizio}[section]
+\newtheorem{richiamo}{Richiamo}[section]
+
+\newenvironment{soluzione}{\begin{proof}[Soluzione]}{\end{proof}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems, breakable, skins}
+
+\tcolorboxenvironment{esercizio}{
+  % oversize,
+  blank, breakable,
+  left = 3mm, top=1mm, bottom=1mm,
+  borderline west={1mm}{0pt}{gray}
+}
+
+%\usepackage{enumitem}
+%\setlist{label=(\alph*)}
+
+\usepackage{listings}
+\lstset{basicstyle=\tt}
+
+\renewcommand\hat\widehat
+\renewcommand\tilde\widetilde
+\renewcommand\bar\overline
+\newcommand\set[1]{\left\{#1\right\}}
+\newcommand\abs[1]{\left\lvert#1\right\rvert}
+\newcommand\inv[1]{#1^{-1}}
+\newcommand\ind[2]{\mathbf 1_{#1}\left(#2\right)}
+\newcommand\mbb[1]{\mathbb #1}
+\newcommand\mcal[1]{\mathcal #1}
+\newcommand\att{\mbb E}
+\newcommand\var{\operatorname{Var}}
+\newcommand\deriv[2]{\frac{\mathrm d #1}{\mathrm d #2}}
+\newcommand\pderiv[2]{\frac{\partial^{#1}}{\partial #2^{#1}}}
+% integrale di Lebesgue
+\newcommand\leb[3]{\int_{#1} #3 \mathrm d #2}
+% note interne
+\newcommand\nota[1]{\textcolor{red}{#1}}
+
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-engine: luatex
+%%% TeX-master: "main"
+%%% End:
