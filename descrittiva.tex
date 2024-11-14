@@ -1,0 +1,73 @@
+
+\section{Statistica Descrittiva}
+
+\begin{esercizio}[Problema 1, scritto del 12/02/2024]
+Un'indagine ISTAT su $n = 100$ famiglie analizza la relazione tra il carattere $X$ relativo alla numerosità del nucleo familiare e il carattere $Y$ realtivo al numero di locali della rispettiva abitazione. L'indagine produce la seguente tabella
+\[
+\begin{array}{c|ccc}
+      & X = 1 & X = 2 & X = 3 \\
+\midrule
+Y = 2 & 20    & 10    & 7     \\
+Y = 3 & 9     & 13    & 13    \\
+Y = 4 & 2     & 5     & 21
+\end{array}
+\]
+Si affrontino i seguenti quesiti.
+\begin{enumerate}[leftmargin=*]
+\item Calcolare la media aritmetica (pesata) e la mediana del carattere $Y$.
+\item Valutare la variabilità di $Y$ tramite l'uso delle differenza media semplice (di ordine $p = 1$).
+\item Valutare la concentrazione del carattere $Y$ rispetto alla distribuzione uniforme, esplicitando il grafico della curva di Lorentz-Gini e calcolando un opportuno indice di concentrazione.
+\item Calcolare la tabella relativa alla distribuzione di probabilità congiunta corrispondente alla situazione (ideale) di indipendenza dei due caratteri.
+\item Scegliere un indice di connessione tra $X$ e $Y$ e calcolarlo numericamente coi dati forniti.
+\item Calcolare la tabella corrispondente alla distribuzione di probabilità congiunta corrispondente alla situazione (ideale) di massima concordanza tra i due caratteri.
+\item Scegliere un indice di concordanza tra $X$ e $Y$ e calcolarlo numericamente coi dati forniti.
+\end{enumerate}
+\end{esercizio}
+
+\begin{soluzione}
+\begin{enumerate}
+\item Cerchiamo di interpretare la tabella in termini più astratti. Abbiamo uno spazio campionario che è la popolazione sotto indagine e che chiamiamo $\Omega$. Questo insieme è munito della sigma-algebra $2^\Omega$ e della misura del conteggio $\mu : 2^\Omega \to [0, +\infty]$ che manda ogni singoletto $\set{\omega}$ in $1$. Poi, $X, Y : \Omega \to \mbb R$ sono due variabili aleatori che prendono solo un insieme finito di valori, $\set{1, 2, 3}$ e $\set{2, 3, 4}$ rispettivamente. In ogni cella della tabella stanno scritti semplicemente i valori
+\[
+	\mu\left[ X = i, Y = j\right] .
+\]
+Possiamo normalizzare tutto, poiché $\mu$ è finita, e considerare la misura di probabilità $\mbb P : 2^\Omega \to [0, 1]$ che manda ogni singoletto $\set{\omega}$ in $\frac 1 n$. La misura indotta
+\[
+	\pi_Y : \mbb B R \to [0, 1] \,,\ \pi_Y (E) := \mbb P [ Y \in E ] .
+\]
+rappresenta quindi la distribuzione della variabile aleatoria $Y : \Omega \to \mbb R$. Possiamo quindi scrivere la funzione di ripartizione
+\[
+	F_Y(t) = \mbb P [Y \le t] =  \frac{37}{100}\ind{[2, +\infty)}{t} + \frac{35}{100}\ind{[3, +\infty)}{t} + \frac{28}{100}\ind{[4, +\infty)}{t} .
+\]
+Ecco la media aritmetica del carattere $Y$ è quindi
+
+\[
+	\bar Y := \int_{\mbb R} t \mathrm d F(t) = \frac{37}{100} \cdot 2 + \frac{35}{100} \cdot 3 + \frac{28}{100} \cdot 7 = 2.91
+\]
+Calcoliamo anche la mediana del carattere $Y$. Abbiamo già calcolato la funzione di ripartizione, non rimane che calcolare anche la sua \enquote{inversa}
+\[
+	\inv{F_Y}(s) = \inf \set{t \in \mbb R \mid F(t) \ge s}.
+\]
+La mediana è semplicemente
+\[
+	\inv{F_Y} \left(\frac 12\right) = 3 .
+\]
+
+\item Richiamiamo questo indice
+\[
+	\frac{1}{{n \choose 2}} \sum_{1 \le i < j \le n} \abs{Y(\omega_i) - Y(\omega_j)}
+\]
+dove $\Omega = \set{\omega_i \mid i = 1, \dots, 100}$. La differenza $\abs{2-3} = 1$ occorre $37 \cdot 35$, la differenza $\abs{2-4} = 2$ occorre $37 \cdot 28$, la differenza $\abs{3-4} = 1$ occorre $35 \cdot 28$ volte. Quindi ecco eseguito il conto sopra
+\[
+	\frac{2}{100 \cdot 99} (1 \cdot 37 \cdot 35 + 2 \cdot 37 \cdot 28 + 1 \cdot 35 \cdot 28) \approx 0.88 .  
+\]
+
+\item ...
+\end{enumerate}
+\end{soluzione}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "main"
+%%% TeX-engine: luatex
+%%% ispell-local-dictionary: "italian"
+%%% End:

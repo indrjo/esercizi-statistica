@@ -1,0 +1,249 @@
+
+
+\section{Statistica Inferenziale}
+
+\begin{esercizio}[Problema 3, scritto del 12/02/2024]
+  Si consideri il modello statistico a $n$ prove indipendenti avente modello base $\mbb X_0 := \mbb R_{> 0}$, $\mcal X_0 := \mcal B \mbb R_{> 0}$, $\Theta := \mbb R_{>0}$ con funzione di verosomiglianza
+\begin{align*}
+  & L_0 : \Theta \times \mbb X_0 \to [0, +\infty] \\
+  & L_0(\theta, x) := \frac{3 \theta^3}{x^4} \ind{[\theta, +\infty)}{x}
+\end{align*}
+dominato dalla misura unidimensionale di Lebesgue $\lambda : \mcal X_0 \to [0, +\infty]$. Quindi il modello statistico base ha misure di probabilità
+\begin{align*}
+  & \pi_\theta^{(0)} : \mcal X_0 \to [0, 1] \\
+  & \pi_\theta^{(0)}(E) := \int_E L_0(\theta,\cdot) \mathrm d\lambda .
+\end{align*}
+\begin{enumerate}[leftmargin=*]
+\item Determinare il modello statistico a $n$ prove indipendenti
+\[
+	\mbb X_n := \mbb X_0^n\,,\ \mcal X_n := \mcal X_0^n\,,\ \Theta \,,\ \pi_\theta^{(n)} := \underbrace{\pi_\theta^{(0)} \otimes \cdots \otimes \pi_\theta^{(0)}}_{n \text{ volte}} .
+\]
+e scriverne la funzione di verosomiglianza $L_n : \Theta \times \mbb X_n \to [\theta, +\infty]$.
+
+\item Scrivere lo stimatore di massima verosomiglianza $\hat\theta_n : \mbb X_n \to \Theta$ e calcolarne la sua legge.
+
+\item Dimostrare che $\hat\theta_n$ è uno stimatore distorto ma asintoticamente non distorto. Poi calcolare uno stimatore $\tilde\theta_n : \mbb X_n \to \Theta$ non distorto e proporzionale a $\hat\theta_n$.
+
+\item Dimostrare, usando i teoremi visti a lezione, che $\tilde\theta_n$ è fortemente consistente.
+
+\item Fissato $n \in \mbb N$ e $\alpha \in [0, 1]$, calcolare un intervallo di confidenza $C_{n, \alpha}(x_1, \dots, x_n)$ per il parametro $\theta$ di livello $1-\alpha$.
+\end{enumerate}
+\end{esercizio}
+
+\begin{soluzione}
+\begin{enumerate}
+\item La funzione di verosomiglianza si scrive subito
+\begin{align*}
+	L_n (\theta; x_1, \dots, x_n) & = \theta^{3n} \prod_{i = 1}^n \frac{\ind{[\theta, +\infty)}{x_i}}{x_i^4} = \\
+	& = \frac{\theta^{3n}}{\left(\prod_{i = 1}^n x_i\right)^4} \ind{[\theta, +\infty)}{\min(x_1, \dots, x_n)} .
+\end{align*}
+
+\item Fissato $(x_1, \dots, x_n) \in \mbb X_n$, studiamo la funzione $L_n(\_; x_1, \dots, x_n) : \Theta \to [0, +\infty]$. Purtroppo qui non possiamo cercare un $\hat\theta \in \Theta$ che realizza $\sup_{\theta \in \Theta} L(\theta; x_1, \dots, x_n)$ derivando perché la funzione non è derivabile. Infatti:
+\[
+	L_n(\theta; x_1, \dots, x_n) = \begin{cases} \frac{\theta^{3n}}{\left(\prod_{i = 1}^n x_i\right)^4} & \text{se } \theta \le \min(x_1, \dots, x_n) \\ 0 & \text{se } \theta > \min(x_1, \dots, x_n)  \end{cases}
+\]
+Stando così le cose, si vede subito che $L(\_; x_1, \dots, x_n)$ raggiunge il valore massimo per $\theta = \min(x_1, \dots, x_n)$. Quindi lo stimatore di massima veorosomiglianza è
+\[\hat\theta : \mbb X_n \to \Theta \,,\ \theta(x_1, \dots, x_n) := \min(x_1, \dots, x_n) .\]
+Cerchiamo la sua legge ora, e per fare ciò ci serve un po' di contesto. Siano $(\Omega, \mcal A, \mbb P_\theta)$ spazi di probabilità per $\theta \in \Theta$ e $X := (X_1, \dots, X_n) : \Omega \to \mbb X_n$ è una variabile aleatoria tale che
+\[
+  \pi_\theta^{(n)} (E) = \mbb P_\theta [X \in E] \text{ per ogni } E \in \mcal X, \theta \in \Theta
+\]
+e in cui $X_1, \dots, X_n : \Omega \to \mbb X$ sono variabili aleatorie IID con densità $L_0(\theta, \_) : \mbb X_0 \to [0, +\infty]$. Noi cercheremo la legge per la variabile aleatoria
+\[
+  \hat\theta_n(X_1, \dots, X_n) : \Omega \to \Theta .
+\]
+Con legge intendiamo la densità oppure equivalentemente una funzione di ripartizione. Scegliamo di scrivere la funzione di ripartizione:
+\[F_\theta (t) = \mbb P_\theta \left[\hat\theta(X_1, \dots, X_n) \le t\right] = 1 - \left(1-F_{X_i, \theta}(t)\right)^n\]
+dove $F_{X_i, \theta}$ è la funzione di ripartizione di una qualsiasi delle $X_i$.\footnote{Scrivere di questa cosa da qualche parte...} Ricordando la relazione che c'è tra funzione di ripartizione e densità di una stessa variabile aleatoria
+\[
+  F_{X_i, \theta}(t) = \int_{-\infty}^t L_0(\theta, x) \mathrm d x = \begin{cases} 0 & \text{se } t < \theta \\ 1 - \frac{\theta^3}{t^3} & \text{se } t \ge \theta \end{cases}
+\]
+Possiamo concludere questo punto allora
+\[
+  F_{\theta}(t) = \begin{cases} 0 & \text{se } t < \theta \\ 1 - \frac{\theta^{3n}}{t^{3n}} & \text{se } t \ge \theta \end{cases} = \left( 1 - \frac{\theta^{3n}}{t^{3n}} \right) \ind{[\theta, +\infty)}{t}.
+\]
+
+\item Per verificare se è distorto e se è asintoticamente distorto dobbiamo in ogni caso calcolare il valore attesto $\mbb E_{\theta}\left[\hat\theta_n(X_1, \dots, X_n)\right]$. Nel punto precedente abbiamo fatto dei conti che possiamo sfruttare. Infatti, la $\hat\theta_n(X_1, \dots, X_n)$ ha densità $f_\theta = F_\theta^\prime$, ed ecco allora il calcolo del valore atteso
+\[
+  \mbb E_{\theta}\left[\hat\theta_n(X_1, \dots, X_n)\right] = \int_{\mbb R}t F_{\theta}^{\prime}(t) \mathrm d t = \int_{\theta}^{+\infty} t \left(\frac{3n \theta^{3n}}{t^{3n+1}} \right) \mathrm d t = \frac{3n}{3n - 1} \theta.
+\]
+Qui di vede subito che non è corretto, ma lo è asintoticamente. Per avere uno stimatore corretto a partire da $\hat\theta_n$ basta considerare
+\[
+  \tilde\theta_n := \frac{3n-1}{3n} \hat\theta_n .
+\]
+
+\item Abbiamo visto nel punto precedente che $\tilde\theta_n$ è corretto e quindi lo è pure asintoticamente. Se riusciamo a dimostrare che è anche
+\[
+	\sum_{n = 1}^{+\infty} \var_\theta \left[ \tilde\theta_n(X_1, \dots, X_n) \right] < +\infty .
+\]
+allora abbiamo finito. Dobbiamo calcolare delle varianze, una per ogni $n \in \mbb N$. %Ricordiamo a questo punto che $\var_\theta[X] = \mbb E_\theta \left[X^2\right] - \left(\mbb E [X]\right)^2$, si ha che
+\begin{align*}
+	\var_\theta \left[ \tilde\theta_n(X_1, \dots, X_n) \right] & = \mbb E_\theta \left[ \tilde\theta_n(X_1, \dots, X_n) ^2 \right] - \theta^2 = \\
+	& = \left(\frac{3n-1}{3n}\right)^2 \mbb E_\theta \left[ \hat\theta_n(X_1, \dots, X_n) ^2 \right] - \theta^2 .
+\end{align*}
+Possiamo calcolare la media dell'ultimo membro visto che sopra abbiamo calcolato la funzione di ripartizione di $\hat\theta_n(X_1, \dots, X_n)$:
+\[
+	\mbb E_\theta \left[ \hat\theta_n(X_1, \dots, X_n) ^2 \right] = \int_{\mbb R} t^2 F_\theta^\prime(t) \mathrm d t = \int_\theta^{+\infty} t^2 \left(\frac{3n \theta^{3n}}{t^{3n+1}} \right) \mathrm d t = \frac{3n}{3n-2} \theta^2 .
+\]
+Mettendo tutto insieme le varianze sono
+\[
+	\var_\theta \left[ \tilde\theta_n(X_1, \dots, X_n) \right] = \frac{(3n-1)^2}{3n(3n-2)}\theta^2 -\theta^2 = \frac{1}{3n(3n-2)} \theta^2 .
+\]
+In conclusione la sommatoria delle varianze si comporta come la serie $\sum_{n=1} \frac{1}{9n^2}$, cioè converge.
+
+\item Essendo $\tilde\theta_n$ uno stimatore corretto, allora un intervallo di confidenza di livello $1-\alpha$, per $\alpha \in [0, 1]$, è dato da
+\[
+	C_{n, \alpha} (x_1, \dots, x_n) := \set{ \theta \in \Theta \left\mid \abs{\tilde\theta_n(x_1, \dots, x_n) - \theta} \le \sqrt{\frac{\var_\theta \left[\tilde\theta_n(X_1, \dots, X_n)\right]}{\alpha}}\right.} .
+\]
+Conosciamo già la varianza e quindi
+\[
+	\gamma_{n, \alpha} := \sqrt{\frac{\var_\theta \left[\tilde\theta_n(X_1, \dots, X_n)\right]}{\alpha}} = \frac{1}{\sqrt{3n(3n-2)\alpha}} \theta .
+\]
+Rimane soltanto da risolvere una disequazione
+%\begin{align*}
+%& \abs{\theta - \tilde\theta_n} \le \gamma_{n, \alpha} \theta \Leftrightarrow \\
+%\Leftrightarrow & \left(\theta - \tilde\theta_n\right)^2 \le \gamma_{n, \alpha}^2 \theta^2 \Leftrightarrow \\
+%\Leftrightarrow & \left(1-\gamma_{n, \alpha}\right) \theta^2 -2\tilde\theta_n \theta + \tilde\theta_n^2 \le 0
+%\end{align*}
+\[
+	\abs{\theta - \tilde\theta_n} \le \gamma_{n, \alpha} \theta \iff \left(1-\gamma_{n, \alpha}\right) \theta^2 -2\tilde\theta_n \theta + \tilde\theta_n^2 \le 0
+\]
+Se $\abs{\gamma_{n, \alpha}} < 1$, allora 
+\[
+	\frac{\tilde\theta_n - \gamma_{n, \alpha}}{1-\gamma_{n,\alpha}^2} \le \theta \le \frac{\tilde\theta_n + \gamma_{n, \alpha}}{1-\gamma_{n,\alpha}^2} .
+\]
+mentre se $\abs{\gamma_{n, \alpha}} > 1$, allora
+\[
+	\theta \le \frac{\tilde\theta_n - \gamma_{n, \alpha}}{1-\gamma_{n,\alpha}^2} \text{ oppure } \theta \ge \frac{\tilde\theta_n + \gamma_{n, \alpha}}{1-\gamma_{n,\alpha}^2} .
+\]
+In ogni caso, comunque fissato $\alpha \in [0, 1]$, si ha che gli intervalli di confidenza sono
+\[
+	C_{n, \alpha} (x_1, \dots, x_n) = \left[\frac{\tilde\theta_n - \gamma_{n, \alpha}}{1-\gamma_{n,\alpha}^2}, \frac{\tilde\theta_n + \gamma_{n, \alpha}}{1-\gamma_{n,\alpha}^2}\right]
+\]
+definitivamente per $n \to +\infty$, cioè da un certo $n$ in poi le regioni di confidenza sono questi intervalli.
+\end{enumerate}
+\end{soluzione}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{esercizio}[Problema 3, 12/09/2024]
+  Si consideri il modello a \(n\) prove ripetute avente modello di base \(\mbb X_0 := \mbb R_+\), \(\mcal X_0 := \mcal B \mbb R_+\), $\Theta := \mbb R_+$ e
+  \[
+    \deriv{\pi_{\theta}^{(0)}}{\lambda_0}(x) = \frac{3\theta^3}{(\theta + x)^4}
+  \]
+  dove $\lambda_0$ è la misura unidimensionale di Lebesgue ristretta a $\mbb R_+$.
+  \begin{enumerate}[leftmargin=*]
+  \item Dimostrare che
+    \[
+      S_n (x_1, \dots, x_n) = \frac 2 n \sum_{j=1}^{n}x_j
+    \]
+    è uno stimatore corretto di \(\theta\).
+
+    
+  \item Dopo aver calcolato \(\var_\theta \left[ S_n\left( X_1, \dots, X_n \right) \right]\), dimostrare (usando i teoremi visti in classe) che \(S_n\) è debolmente consistente.
+    
+  \item Discutere se vale la disuguaglianza
+    \[
+      \var_\theta \left[ S_n\left( X_1, \dots, X_n \right) \right] > \frac{1}{n I_0(\theta)}
+    \]
+    dove \(I_0\) è l'{\em informazione di Fisher} del modello di base.
+    
+  \item Verificare (usando i teoremi di probabilità) che per ogni \(\theta \in \Theta\)
+    \[
+      \sqrt{n} \left( S_n\left( X_1, \dots, X_n \right) - \theta \right) \to N(0, F(\theta)) \text{ in distribuzione}
+    \]
+    rispetto alla probabilità \(\mbb P_\theta\), dove \(F : \Theta \to \mbb R\) è una opportuna funzione continua.
+  \end{enumerate}
+\end{esercizio}
+
+\begin{soluzione}
+  \begin{enumerate}
+  \item Come al solito, dobbiamo calcolare
+    \[
+      \mbb E_\theta \left[ S_n\left(X_1, \dots, X_n\right) \right]
+    \]
+    dove \(X_1, \dots, X_n\) sono variabili aleatorie a valori in \(\mbb X_0\) i.i.d. con densità
+    \[
+      f_\theta : \mbb X_o \to \mbb R \,,\
+      f_\theta (x) := \frac{\mathrm d \pi_{\theta}^{(0)}}{\mathrm d \lambda_0}(x) = \frac{3\theta^3}{(\theta + x)^4}
+    \]
+    Eseguiamo il conto del valore atteso quindi
+    \[
+      \mbb E_\theta \left[ S_n\left(X_1, \dots, X_n\right) \right] = \frac{2}{n} \sum_{j=1}^{n} \mbb E_\theta X_j = 2 \mbb E_\theta X_0
+    \]
+    Il valore atteso dell'ultimo membro si può calcolare attraverso la densità
+    \[
+      \mbb E_\theta X_0 = \int_{\mbb X_0} x f_\theta (x) \mathrm d x = 3\theta^3 \int_{0}^{+\infty} \frac{x}{(\theta + x)^4}  \mathrm d x
+    \]
+    %\begin{align*}
+     % \mbb E_\theta \left[ S_n\left(X_1, \dots, X_n\right) \right] &= \frac{2}{n} \sum_{j=1}^{n} \mbb E_\theta X_j = \\
+      %                                                             &= 2 \mbb E_\theta X_0 = \\ 
+       %                                                            &= 6\theta^3 \int_{0}^{+\infty} \frac{x}{(\theta + x)^4}  \mathrm d x .
+    %\end{align*}
+    Rimane da calcolare solo l'integrale all'ultimo membro:
+    \[
+      \int_{0}^{+\infty} \frac{x}{(\theta + x)^4} = \int_{0}^{+\infty} \frac{1}{(\theta+x)^3} \mathrm d x - \theta \int_{0}^{+\infty}\frac{1}{(\theta+x)^4} \mathrm d x = \frac{1}{6\theta^2} .
+    \]
+    Pertanto \(S_n\) è uno stimatore corretto di \(\theta\) perché
+    \[
+      \mbb E_\theta \left[ S_n\left(X_1, \dots, X_n\right) \right] = \theta
+    \]
+
+    
+  \item Calcoliamo le varianze conoscendo la densità delle variabili aleatorie i.i.d. \(X_1, \dots, X_n\) del punto precedente:
+    \[
+      \var_\theta \left[ S_n\left( X_1, \dots, X_n \right) \right] = \frac{4}{n^2} \sum_{j=1}^{n} \var_\theta X_j = \frac{4}{n} \var_\theta X_0 = \frac{4}{n} \left( \att_\theta X_0^2 - \left(\att_\theta X_0 \right)^2 \right)
+    \]
+    Dal punto precedente sappiamo che \(\att_\theta X_0 = \frac{\theta}{2}\). Calcoliamo l'altro valore atteso:
+    \[\att X_0^2 = \int_{\mbb X_0} x^2 f_\theta (x) \mathrm d x = 3\theta^3 \int_{0}^{+\infty} \frac{x^2}{(\theta+x)^4} \mathrm d x . \]
+    L'integrale al secondo membro si può calcolare facilmente, per esempio ricordando che \(x^2 = (\theta+x)^2-\theta^2-2\theta x\). Alla fine si arriva a
+    \[
+      \var_\theta X_0 = \frac{3}{4}\theta^2
+    \]
+    e quindi a
+    \[
+      \var_\theta \left[ S_n\left( X_1, \dots, X_n \right) \right] = \frac{4}{n} \left( \theta^2 - \frac{\theta^2}{4} \right) = \frac{3}{n} \theta^2 .
+    \]
+
+  \item Il modello è regolare di classe \(C^2\), quindi l'informazione di Fisher del modello di base si scrive come
+    \[
+      I_0 (\theta) = - \att_\theta \left[ \pderiv 2 \theta \log f_\theta(X) \right] .
+    \]
+    Calcoliamo quindi il valore atteso al secondo membro:
+    \begin{align*}
+      \att_\theta \left[ \pderiv 2 \theta \log f_\theta(X) \right] &= \att_\theta \left[ -\frac{3}{\theta^2} + \frac{4}{(\theta+X)^2} \right] = \\
+                                                                   &= - \frac{3}{\theta^2} + 4 \att_\theta \left[ \frac{1}{(\theta + X)^2} \right] = \\
+                                                                   &= - \frac{3}{\theta^2} + 4 \int_{0}^{+\infty} \frac{1}{(\theta+x)^2} f_\theta (x) \mathrm dx = \\
+                                                                   &= - \frac{3}{\theta^2} + \frac{12}{5\theta^2} = - \frac{3}{5\theta^2}
+    \end{align*}
+    È facile verificare la disuguaglianza a questo punto.
+
+  \item Usiamo quanto ricavato nei punti precedenti: in particolare, se \(\{X_n \mid n \in \mbb N\}\) è una successione di variabili aleatorie i.i.d. con densità \(f_\theta = \deriv{\pi_\theta^{(0)}}{\lambda_0}\), allora per ogni \(j \in \mbb N\)
+    \begin{align*}
+      & \att_\theta X_j = \frac{1}{2} \theta \\
+      & \var_\theta X_j = \frac{3}{4} \theta^2
+    \end{align*}
+    Quindi per il {\scshape Teorema Centrale del Limite}
+    \[
+      \sqrt n \left( \frac 1 n \sum_{j=1}^{n}X_j - \frac{\theta}{2} \right) \to \mcal N \left(0, \frac 3 4 \theta^2\right).
+    \]
+    da cui segue che
+    \[
+      \sqrt n \left(\frac 2 n \sum_{j=1}^{n}X_j - \frac{\theta}{2} \right) \to \mcal N \left(0, 3 \theta^2\right)
+    \]
+    che è quello che volevamo dimostrare. In particolare, \(F(\theta) = 3\theta^2.\)
+    
+  \item 
+    \qedhere
+  \end{enumerate}
+\end{soluzione}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "main"
+%%% TeX-engine: luatex
+%%% ispell-local-dictionary: "italian"
+%%% End:
